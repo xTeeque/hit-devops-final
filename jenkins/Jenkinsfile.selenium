@@ -1,0 +1,64 @@
+// Step 7 - run the Selenium IDE project against production, triggered by Jenkins.
+//
+// The .side project recorded in Selenium IDE is executed headlessly by
+// selenium-side-runner, so the exact same file is both the submitted artifact
+// and the thing CI runs. No translation step, nothing to drift.
+pipeline {
+    agent any
+
+    environment {
+        PATH    = "/opt/homebrew/bin:${env.WORKSPACE}/selenium/node_modules/.bin:${env.PATH}"
+        APP_URL = 'http://localhost:8080/AsafArusi/'
+    }
+
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        timeout(time: 10, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps { git branch: 'main', url: 'https://github.com/xTeeque/hit-devops-final.git' }
+        }
+
+        stage('Wait for production') {
+            steps {
+                sh '''
+                    set -eu
+                    curl -fsS --retry 10 --retry-delay 2 --retry-connrefused "${APP_URL}" > /dev/null
+                    echo "production is answering"
+                '''
+            }
+        }
+
+        stage('Install runner') {
+            steps {
+                dir('selenium') {
+                    sh 'npm ci --no-audit --no-fund'
+                    sh 'chromedriver --version && node --version'
+                }
+            }
+        }
+
+        stage('Run 5 validations') {
+            steps {
+                dir('selenium') {
+                    sh '''
+                        set -eu
+                        selenium-side-runner \
+                            --config-file .side.yml \
+                            --output-directory ../selenium-results \
+                            AsafArusi-HIT-DevOps-Final.side
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always  { junit allowEmptyResults: true, testResults: 'selenium-results/*.xml' }
+        success { echo 'All 5 validations passed against production.' }
+        failure { echo 'A functional validation failed - production is not behaving as specified.' }
+    }
+}

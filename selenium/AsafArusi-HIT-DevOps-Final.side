@@ -1,0 +1,282 @@
+{
+  "id": "4a8f9b3f-bbe4-4814-b18c-4195d0ed4f37",
+  "version": "2.0",
+  "name": "AsafArusi-HIT-DevOps-Final",
+  "url": "http://localhost:8080",
+  "tests": [
+    {
+      "id": "0109a66e-3252-414f-b4d5-13333e40489b",
+      "name": "V1 - page identity (assert title)",
+      "commands": [
+        {
+          "id": "e9a85a6d-13bf-4b9f-b516-94b11aa8eaf6",
+          "comment": "Load production",
+          "command": "open",
+          "target": "/AsafArusi/index.jsp",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9c4ebef1-c94d-4022-9b09-beecd5828de6",
+          "comment": "",
+          "command": "setWindowSize",
+          "target": "1280x900",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "da2b34b2-d982-4801-9f66-368284446d02",
+          "comment": "ASSERT: hard precondition. If we are not on the right page nothing else means anything, so the test must stop here.",
+          "command": "assertTitle",
+          "target": "HIT DevOps Final - Asaf Arusi",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "553b837d-5b3a-4ad8-a9b4-2f6c3902cbb2",
+          "comment": "ASSERT: confirms the deployed build is the one we expect.",
+          "command": "assertText",
+          "target": "id=heading",
+          "targets": [],
+          "value": "Deployed by Jenkins to Tomcat"
+        }
+      ]
+    },
+    {
+      "id": "433b6b32-9397-47e8-bf7d-78c35d67108e",
+      "name": "V2 - required controls render (verify)",
+      "commands": [
+        {
+          "id": "8dd8f5d1-eee5-419e-bcec-7a1c38967e6b",
+          "comment": "",
+          "command": "open",
+          "target": "/AsafArusi/index.jsp",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "cf712d6d-07b3-4080-aa87-95e8fddf9533",
+          "comment": "VERIFY: the input text box required by the brief.",
+          "command": "verifyElementPresent",
+          "target": "id=username",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3ad5e929-3d46-4888-bae4-55fb7eba1bce",
+          "comment": "VERIFY: the button required by the brief.",
+          "command": "verifyElementPresent",
+          "target": "id=greetBtn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "57108894-d16c-47eb-8582-23b7e7bd1142",
+          "comment": "VERIFY: the link required by the brief. Soft checks so one missing control still reports the other two.",
+          "command": "verifyElementPresent",
+          "target": "id=aboutLink",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "9c84ecde-6fc9-4d79-acca-950bd8aae422",
+      "name": "V3 - positive path (valid name is greeted)",
+      "commands": [
+        {
+          "id": "12918e73-3726-49cf-a9aa-3f1e22dff5e2",
+          "comment": "",
+          "command": "open",
+          "target": "/AsafArusi/index.jsp",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "55e362b5-e0e8-4554-94df-345a4b980b68",
+          "comment": "",
+          "command": "click",
+          "target": "id=username",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "55376aba-068f-4dcb-b895-f39ff32e8404",
+          "comment": "Valid input",
+          "command": "type",
+          "target": "id=username",
+          "targets": [],
+          "value": "Asaf"
+        },
+        {
+          "id": "5e340ff5-5d46-4703-8523-0f502d3294aa",
+          "comment": "",
+          "command": "click",
+          "target": "id=greetBtn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "01ce19dd-856a-4127-8c74-13b5b27f76a0",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "id=result",
+          "targets": [],
+          "value": "5000"
+        },
+        {
+          "id": "78b30af4-8842-4ce0-b39c-e45e0219097e",
+          "comment": "ASSERT: the core business function works for valid input.",
+          "command": "assertText",
+          "target": "id=result",
+          "targets": [],
+          "value": "Hello, Asaf!"
+        },
+        {
+          "id": "adbcad25-eb24-48d1-8c34-2a752f4a9f4e",
+          "comment": "ASSERT: the server-side session token was derived, i.e. the backend really ran.",
+          "command": "assertElementPresent",
+          "target": "id=token",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "f0b4774b-02da-4145-8e78-757426dd20d6",
+      "name": "V4 - negative path (empty input is rejected)",
+      "commands": [
+        {
+          "id": "3bbcecdd-180c-4220-954c-3fb20a9ab6c2",
+          "comment": "",
+          "command": "open",
+          "target": "/AsafArusi/index.jsp",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "49c583a2-6ccf-46d3-8cc0-7f0a42f44a72",
+          "comment": "Submit with the field left empty",
+          "command": "click",
+          "target": "id=greetBtn",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "222e8c24-8933-4b11-a295-6869149c929e",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "id=error",
+          "targets": [],
+          "value": "5000"
+        },
+        {
+          "id": "2eb90e50-6dab-40ec-90ad-56f1d7501197",
+          "comment": "ASSERT: NEGATIVE TEST. Proves the app rejects invalid input, not just that it accepts valid input.",
+          "command": "assertText",
+          "target": "id=error",
+          "targets": [],
+          "value": "Please enter your name before continuing."
+        },
+        {
+          "id": "6e22ccfb-2a1d-4ae5-be39-6a3080b4589d",
+          "comment": "VERIFY: and that it did not greet anyone by mistake.",
+          "command": "verifyElementNotPresent",
+          "target": "id=result",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "a1e3aa2e-ca4a-492c-9bd3-da28515ecc3f",
+      "name": "V5 - navigation to About and back",
+      "commands": [
+        {
+          "id": "6fde444d-6650-458a-abe9-033c6c8d13c7",
+          "comment": "",
+          "command": "open",
+          "target": "/AsafArusi/index.jsp",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f9cd13bc-1864-4911-a6c0-300b22898a41",
+          "comment": "",
+          "command": "click",
+          "target": "id=aboutLink",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "42b6e7fc-2782-47c2-9b33-741adc516af0",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "id=aboutHeading",
+          "targets": [],
+          "value": "5000"
+        },
+        {
+          "id": "fa0bcab1-9ab0-4be5-a44a-5ecf290a84c3",
+          "comment": "ASSERT: the link actually navigated.",
+          "command": "assertTitle",
+          "target": "About - HIT DevOps Final",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "34f69d5f-e128-462a-ab16-b3109e1a49c5",
+          "comment": "VERIFY: the About page rendered its server details.",
+          "command": "verifyElementPresent",
+          "target": "id=serverInfo",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "14bb50a9-27e3-4f38-957d-094e11c39b7b",
+          "comment": "",
+          "command": "click",
+          "target": "id=homeLink",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b582056b-db17-4306-89d8-424cd4297a74",
+          "comment": "",
+          "command": "waitForElementPresent",
+          "target": "id=greetForm",
+          "targets": [],
+          "value": "5000"
+        },
+        {
+          "id": "702fa163-ee97-4d5e-948e-c9a19aac61a6",
+          "comment": "ASSERT: and navigation back works too.",
+          "command": "assertTitle",
+          "target": "HIT DevOps Final - Asaf Arusi",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "6f3279b6-1001-4772-9e62-4e41c0af3f9b",
+      "name": "Default Suite",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "0109a66e-3252-414f-b4d5-13333e40489b",
+        "433b6b32-9397-47e8-bf7d-78c35d67108e",
+        "9c84ecde-6fc9-4d79-acca-950bd8aae422",
+        "f0b4774b-02da-4145-8e78-757426dd20d6",
+        "a1e3aa2e-ca4a-492c-9bd3-da28515ecc3f"
+      ]
+    }
+  ],
+  "urls": [
+    "http://localhost:8080"
+  ],
+  "plugins": []
+}

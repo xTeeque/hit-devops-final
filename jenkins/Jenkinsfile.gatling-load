@@ -1,0 +1,52 @@
+// Step 9 - three minute LOAD test at a steady rate below the max limit.
+//
+// All three Gatling jobs share gatling/run.sh and gatling/simulations, so the
+// max-limit, load and stress runs exercise identical requests and their graphs
+// can be compared directly.
+pipeline {
+    agent any
+
+    environment {
+        APP_BASE  = 'http://localhost:8080/AsafArusi'
+        JAVA_HOME = '/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home'
+    }
+
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+        timeout(time: 30, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps { git branch: 'main', url: 'https://github.com/xTeeque/hit-devops-final.git' }
+        }
+
+        stage('Install Gatling') {
+            steps { sh './gatling/install.sh' }
+        }
+
+        stage('LoadSimulation') {
+            steps {
+                sh './gatling/run.sh LoadSimulation -Dduration.secs=180'
+            }
+        }
+
+        stage('Collect report') {
+            steps {
+                sh '''
+                    set -eu
+                    BUNDLE=$(ls -d gatling/gatling-charts-highcharts-bundle-* | head -1)
+                    LATEST=$(ls -dt "$BUNDLE"/target/gatling/*/ | head -1)
+                    rm -rf gatling-report && mkdir -p gatling-report
+                    cp -R "$LATEST". gatling-report/
+                    echo "report collected from $LATEST"
+                '''
+            }
+        }
+    }
+
+    post {
+        always { archiveArtifacts artifacts: 'gatling-report/**', allowEmptyArchive: true }
+    }
+}

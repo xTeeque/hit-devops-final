@@ -15,7 +15,7 @@ import static io.gatling.javaapi.core.CoreDsl.*;
  */
 public class StressSimulation extends Simulation {
 
-    private static final int RATE     = Integer.getInteger("stress.rate", 150);
+    private static final int RATE     = Integer.getInteger("stress.rate", 300);
     private static final int DURATION = Integer.getInteger("duration.secs", 180);
 
     private final ScenarioBuilder scn =

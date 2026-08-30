@@ -69,7 +69,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const entries = har.log.entries.length;
   await client.close();
   chrome.kill();
-  fs.rmSync(profile, { recursive: true, force: true });
+  // Chrome unlinks its profile lazily; retry rather than fail after a good capture.
+  await sleep(1500);
+  try { fs.rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 300 }); }
+  catch { /* the temp profile is disposable */ }
 
   console.log(`wrote ${OUT}`);
   console.log(`${entries} entries:`);

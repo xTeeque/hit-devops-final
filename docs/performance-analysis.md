@@ -65,6 +65,38 @@ The lesson is part of the result: **a load test against a cold JVM measures the
 JVM.** Every number in the table above was taken after the server had been
 serving for some time, and the knee was confirmed twice on independent runs.
 
+## The three submitted runs
+
+| | Max limit (ramp 50-350) | Load (150/sec, 3 min) | Stress (500/sec, 3 min) |
+|---|---:|---:|---:|
+| requests | 136,000 | 112,528 | 320,080 |
+| failures | 3,252 (2.4%) | **0** | **152,919 (47.8%)** |
+| mean | 4,167 ms | **7 ms** | 11,692 ms |
+| p95 | 20,911 ms | **32 ms** | 15,976 ms |
+| p99 | 42,381 ms | **35 ms** | 22,096 ms |
+| max | 58,904 ms | 486 ms | 60,047 ms |
+| throughput | 624 req/sec | 568 req/sec | 1,442 req/sec (753 successful) |
+| under 800 ms | 58.1% | **100%** | 3.8% |
+
+Three numbers tell the whole story.
+
+**The load test passed its own assertion** - p95 of 32 ms against a 2,000 ms
+budget, zero failures, every single one of 112,528 requests served in under
+800 ms. That is what running comfortably inside capacity looks like.
+
+**The stress test failed almost half its requests** - 152,919 of 320,080. Note
+that its raw throughput, 1,442 req/sec, is *higher* than the load test's 568.
+That number is misleading and worth understanding: most of it is the server
+rejecting connections quickly. Only 753 req/sec were actually served. Counting
+failed requests as throughput makes an overloaded system look busier than a
+healthy one, which is why throughput must always be read next to the error rate.
+
+**The max-limit ramp shows both halves in one run** - 58% of requests completed
+in under 800 ms (the early steps, below the limit) while 37% took over 1,200 ms
+(the later steps, past it). The failures all cluster at a minimum of 15.5
+seconds, which is the client timeout: those requests were not refused, they
+waited in the queue until the load generator gave up on them.
+
 ## (l) Why the graphs look the way they do
 
 ### Max limit run - the staircase

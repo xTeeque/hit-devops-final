@@ -1,0 +1,66 @@
+// Step 4 - deliver the application from GitHub into production (Tomcat).
+pipeline {
+    agent any
+
+    environment {
+        CATALINA_BASE = '/opt/homebrew/opt/tomcat@9/libexec'
+        APP_NAME      = 'AsafArusi'
+        APP_URL       = 'http://localhost:8080/AsafArusi/'
+    }
+
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        timeout(time: 5, unit: 'MINUTES')
+    }
+
+    // Jenkins is on localhost with no public address, so it polls GitHub
+    // rather than receiving a webhook.
+    triggers { pollSCM('* * * * *') }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/xTeeque/hit-devops-final.git'
+                sh 'git --no-pager log -1 --pretty="commit %h by %an - %s"'
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                sh '''
+                    set -eu
+                    TARGET="${CATALINA_BASE}/webapps/${APP_NAME}"
+                    mkdir -p "$TARGET"
+                    rsync -a --delete app/ "$TARGET/"
+                    echo "deployed $(find app -type f | wc -l | tr -d ' ') files to $TARGET"
+                '''
+            }
+        }
+
+        stage('Smoke test') {
+            steps {
+                sh '''
+                    set -eu
+                    # Tomcat recompiles the JSP on the next request; give it a moment.
+                    for i in $(seq 1 15); do
+                        CODE=$(curl -s -o /dev/null -w '%{http_code}' "${APP_URL}" || echo 000)
+                        if [ "$CODE" = "200" ]; then
+                            echo "smoke test passed (HTTP 200) after ${i}s"
+                            curl -s "${APP_URL}" | grep -q 'id="heading"' \
+                                && echo "content check passed" && exit 0
+                        fi
+                        sleep 1
+                    done
+                    echo "smoke test FAILED - last status ${CODE}"
+                    exit 1
+                '''
+            }
+        }
+    }
+
+    post {
+        success { echo "Production is live: ${env.APP_URL}" }
+        failure { echo 'Deployment failed - production may be serving the previous version.' }
+    }
+}

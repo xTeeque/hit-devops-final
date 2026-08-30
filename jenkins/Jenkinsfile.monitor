@@ -1,0 +1,50 @@
+// Step 6 - availability monitor, triggered by Jenkins every 5 minutes.
+// Checks that the app answers 200 AND serves the expected content, so it
+// detects "Tomcat is up but the application is broken", not just "port open".
+pipeline {
+    agent any
+
+    environment {
+        APP_URL       = 'http://localhost:8080/AsafArusi/'
+        EXPECT_TEXT   = 'id="heading"'
+        MAX_LATENCY_S = '2.0'
+    }
+
+    options {
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '300'))
+        timeout(time: 2, unit: 'MINUTES')
+    }
+
+    triggers { cron('H/5 * * * *') }
+
+    stages {
+        stage('Probe') {
+            steps {
+                sh '''
+                    set -eu
+                    RESP=$(curl -s -o /tmp/monitor_body.html \
+                                -w '%{http_code} %{time_total}' \
+                                --max-time 10 "${APP_URL}") || RESP="000 0"
+                    CODE=$(echo "$RESP" | cut -d' ' -f1)
+                    TIME=$(echo "$RESP" | cut -d' ' -f2)
+                    echo "status=${CODE} response_time=${TIME}s url=${APP_URL}"
+
+                    [ "$CODE" = "200" ] || { echo "DOWN - expected 200, got ${CODE}"; exit 1; }
+
+                    grep -q "${EXPECT_TEXT}" /tmp/monitor_body.html \
+                        || { echo "DEGRADED - 200 returned but expected content missing"; exit 1; }
+
+                    SLOW=$(echo "$TIME > ${MAX_LATENCY_S}" | bc -l)
+                    [ "$SLOW" = "0" ] || { echo "SLOW - ${TIME}s exceeds ${MAX_LATENCY_S}s budget"; exit 1; }
+
+                    echo "UP - 200, content present, ${TIME}s"
+                '''
+            }
+        }
+    }
+
+    post {
+        failure { echo 'Availability check FAILED - the application is down or degraded.' }
+    }
+}

@@ -4,3 +4,5 @@ work/
 logs/
 gatling/results/
 node_modules/
+gatling/gatling-charts-highcharts-bundle-*/
+gatling/results/

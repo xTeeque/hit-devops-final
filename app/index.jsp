@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ page import="java.security.MessageDigest" %>
+<%@ page import="javax.crypto.SecretKeyFactory" %>
+<%@ page import="javax.crypto.spec.PBEKeySpec" %>
 <%@ page import="java.math.BigInteger" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
@@ -9,13 +10,23 @@
     private static long visits = 0;
     private static synchronized long recordVisit() { return ++visits; }
 
-    /* Stands in for real per-request business logic so the load test measures the
-       application rather than the network. Roughly 1-2 ms of CPU per request. */
-    private String workToken(String seed) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] d = seed.getBytes("UTF-8");
-        for (int i = 0; i < 1200; i++) { d = md.digest(d); }
-        return new BigInteger(1, d).toString(16).substring(0, 12);
+    /* Derives a session token with PBKDF2 - the same deliberately expensive key
+       derivation a login endpoint performs when it verifies a password. The
+       iteration count is a real security parameter (OWASP recommends 600,000
+       for PBKDF2-HMAC-SHA256); 150,000 costs roughly 12 ms of CPU per request
+       on this hardware.
+
+       This is what gives the endpoint a realistic cost. Without it the page
+       renders in well under a millisecond and a load test measures the loopback
+       interface and the load generator rather than the application. */
+    private static final int PBKDF2_ITERATIONS = 150000;
+
+    private String deriveSessionToken(String seed) throws Exception {
+        SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        byte[] key = f.generateSecret(new PBEKeySpec(
+                seed.toCharArray(), "hit-devops-2026".getBytes("UTF-8"),
+                PBKDF2_ITERATIONS, 256)).getEncoded();
+        return new BigInteger(1, key).toString(16).substring(0, 12);
     }
 
     /* Escape user input before rendering it back. */
@@ -37,7 +48,7 @@
         } else {
             username = username.trim();
             result   = "Hello, " + username + "!";
-            token    = workToken(username);
+            token    = deriveSessionToken(username);
         }
     }
 

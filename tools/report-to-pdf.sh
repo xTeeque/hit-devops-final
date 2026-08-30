@@ -13,6 +13,9 @@ OUT="${2:?usage: report-to-pdf.sh <report-dir> <output.pdf>}"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 DEADLINE=90
 
+# Chrome needs an absolute file:// path. A relative one parses the first path
+# segment as a hostname and silently renders an ERR_INVALID_URL error page.
+SRC="$(cd "$SRC" 2>/dev/null && pwd)" || { echo "no such directory: $1" >&2; exit 1; }
 [ -f "$SRC/index.html" ] || { echo "no index.html in $SRC" >&2; exit 1; }
 mkdir -p "$(dirname "$OUT")"
 rm -f "$OUT"
@@ -43,4 +46,13 @@ sleep 1
 rm -rf "$PROFILE" 2>/dev/null
 
 [ -s "$OUT" ] || { echo "PDF was not produced for $SRC" >&2; exit 1; }
+
+# A rendered error page is a valid, non-empty PDF, so size proves nothing.
+# Confirm the report content actually made it in.
+if command -v pdftotext >/dev/null; then
+  if ! pdftotext "$OUT" - 2>/dev/null | grep -qiE "Gatling|Global Information|response time"; then
+    echo "PDF rendered but contains no Gatling report content: $OUT" >&2
+    exit 1
+  fi
+fi
 echo "$OUT ($(du -h "$OUT" | cut -f1))"

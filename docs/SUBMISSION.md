@@ -8,6 +8,7 @@ Email to **mosh?hit@gmail.com** (address as printed in the brief), subject:
 | a | The JSP file | `app/index.jsp` (and `app/about.jsp`) | ready |
 | b | Screenshot of GitHub with the app in it | https://github.com/xTeeque/hit-devops-final | **you** |
 | c | Screenshot of the app in Tomcat, URL visible | http://localhost:8080/AsafArusi/ | **you** |
+| bonus | Public URL + write-up | http://46.224.99.46:8090/AsafArusi/ , `docs/public-exposure.md` | ready |
 | d | Link to the public repo | https://github.com/xTeeque/hit-devops-final | ready |
 | e | Monitor tool, what it checks, screenshot passing | `jenkins/Jenkinsfile.monitor`, job `AsafArusi-02` | **you** (screenshot) |
 | f | Selenium IDE `.side` file | `selenium/AsafArusi-HIT-DevOps-Final.side` | ready |

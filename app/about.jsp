@@ -1,4 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%-- session="false": this application holds no per-user state, and a JSP
+     creates an HttpSession for every visitor unless told not to. Under load
+     that is one session object per virtual user, each living for the 30 minute
+     default timeout, which fills the heap and degrades every later test run. --%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" session="false" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%

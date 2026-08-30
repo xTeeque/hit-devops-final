@@ -14,7 +14,7 @@ import static io.gatling.javaapi.core.CoreDsl.*;
  */
 public class LoadSimulation extends Simulation {
 
-    private static final int RATE     = Integer.getInteger("load.rate", 100);
+    private static final int RATE     = Integer.getInteger("load.rate", 150);
     private static final int DURATION = Integer.getInteger("duration.secs", 180);
 
     private final ScenarioBuilder scn =

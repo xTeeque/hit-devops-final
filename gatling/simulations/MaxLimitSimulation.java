@@ -15,9 +15,9 @@ import static io.gatling.javaapi.core.CoreDsl.*;
  */
 public class MaxLimitSimulation extends Simulation {
 
-    private static final int START_RATE  = Integer.getInteger("start.rate", 20);
-    private static final int STEP_RATE   = Integer.getInteger("step.rate", 20);
-    private static final int STEPS       = Integer.getInteger("steps", 10);
+    private static final int START_RATE  = Integer.getInteger("start.rate", 50);
+    private static final int STEP_RATE   = Integer.getInteger("step.rate", 50);
+    private static final int STEPS       = Integer.getInteger("steps", 7);
     private static final int LEVEL_SECS  = Integer.getInteger("level.secs", 20);
 
     private final ScenarioBuilder scn =

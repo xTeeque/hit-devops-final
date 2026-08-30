@@ -7,7 +7,8 @@ pipeline {
     agent any
 
     environment {
-        PATH    = "/opt/homebrew/bin:${env.WORKSPACE}/selenium/node_modules/.bin:${env.PATH}"
+        // node/npm come from the official installer in /usr/local/bin, not Homebrew.
+        PATH    = "/usr/local/bin:/opt/homebrew/bin:${env.WORKSPACE}/selenium/node_modules/.bin:${env.PATH}"
         APP_URL = 'http://localhost:8080/AsafArusi/'
     }
 
@@ -48,7 +49,7 @@ pipeline {
                         set -eu
                         selenium-side-runner \
                             --config-file .side.yml \
-                            --output-directory ../selenium-results \
+                            --output-directory "${WORKSPACE}/selenium-results" \
                             AsafArusi-HIT-DevOps-Final.side
                     '''
                 }
@@ -57,7 +58,7 @@ pipeline {
     }
 
     post {
-        always  { junit allowEmptyResults: true, testResults: 'selenium-results/*.xml' }
+        always  { archiveArtifacts artifacts: 'selenium-results/*.json', allowEmptyArchive: true }
         success { echo 'All 5 validations passed against production.' }
         failure { echo 'A functional validation failed - production is not behaving as specified.' }
     }

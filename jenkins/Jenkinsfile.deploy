@@ -60,7 +60,13 @@ pipeline {
     }
 
     post {
-        success { echo "Production is live: ${env.APP_URL}" }
+        success {
+            echo "Production is live: ${env.APP_URL}"
+            // Post-deploy verification. wait:false so the deploy job reports its own
+            // result immediately, propagate:false so a flaky UI test never marks a
+            // successful deployment as failed.
+            build job: 'AsafArusi-03-selenium-tests', wait: false, propagate: false
+        }
         failure { echo 'Deployment failed - production may be serving the previous version.' }
     }
 }

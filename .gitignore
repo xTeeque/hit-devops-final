@@ -6,3 +6,5 @@ gatling/results/
 node_modules/
 gatling/gatling-charts-highcharts-bundle-*/
 gatling/results/
+tools/node_modules/
+selenium/selenium-results/

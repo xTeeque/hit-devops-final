@@ -1,0 +1,11 @@
+{
+  "name": "asafarusi-har-capture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Captures a HAR of the application journey over the Chrome DevTools protocol.",
+  "scripts": { "har": "node capture-har.js" },
+  "dependencies": {
+    "chrome-remote-interface": "^0.33.3",
+    "chrome-har": "^0.13.5"
+  }
+}

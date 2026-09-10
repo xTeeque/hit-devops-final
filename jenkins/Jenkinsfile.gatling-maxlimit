@@ -28,7 +28,10 @@ pipeline {
 
         stage('MaxLimitSimulation') {
             steps {
-                sh './gatling/run.sh MaxLimitSimulation -Dsteps=10 -Dlevel.secs=20 -Dstart.rate=20 -Dstep.rate=20'
+                // 12 levels of 20s: 50, 75, 100 ... 325 users/sec. The 25/sec step is
+                // fine enough to place the knee precisely, and the ramp has to run well
+                // past it - a sweep that stops below the limit never finds one.
+                sh './gatling/run.sh MaxLimitSimulation -Dsteps=12 -Dlevel.secs=20 -Dstart.rate=50 -Dstep.rate=25'
             }
         }
 

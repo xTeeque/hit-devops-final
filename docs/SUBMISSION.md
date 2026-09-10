@@ -25,14 +25,17 @@ Repo: https://github.com/xTeeque/hit-devops-final
 
 ## Evidence that everything ran through Jenkins
 
-| job | build | result |
+| job | builds | latest result |
 |---|---|---|
-| `AsafArusi-01-deploy-to-tomcat` | #16 | SUCCESS - triggered by pollSCM off commit `e191f44` |
-| `AsafArusi-02-availability-monitor` | #2727 | SUCCESS - 2,700+ runs on `H/5 * * * *` |
-| `AsafArusi-03-selenium-tests` | #13 | SUCCESS - 5/5, auto-triggered by the deploy job |
-| `AsafArusi-04-gatling-max-limit` | #1 | SUCCESS |
-| `AsafArusi-05-gatling-load-3min` | #1 | SUCCESS - assertions passed |
-| `AsafArusi-06-gatling-stress-3min` | #1 | SUCCESS |
+| `AsafArusi-01-deploy-to-tomcat` | 19 | SUCCESS - every build triggered by pollSCM off a real commit |
+| `AsafArusi-02-availability-monitor` | 2,730 | SUCCESS - running on `H/5 * * * *` |
+| `AsafArusi-03-selenium-tests` | 16 | SUCCESS - 5/5, auto-triggered by the deploy job |
+| `AsafArusi-04-gatling-max-limit` | 1 | SUCCESS |
+| `AsafArusi-05-gatling-load-3min` | 1 | SUCCESS - assertions passed |
+| `AsafArusi-06-gatling-stress-3min` | 1 | SUCCESS |
+
+The deploy and Selenium counts keep rising: every push to `main` is picked up
+within a minute and redeployed, which is the pipeline doing its job.
 
 ## What only you can produce
 

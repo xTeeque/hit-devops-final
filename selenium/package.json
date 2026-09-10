@@ -4,10 +4,10 @@
   "private": true,
   "description": "Runs the Selenium IDE project headlessly so Jenkins can trigger it (brief step 7).",
   "scripts": {
-    "test": "selenium-side-runner --config-file .side.yml AsafArusi-HIT-DevOps-Final.side"
+    "test": "selenium-side-runner --config-file .side.yml HIT-DevOps-Final-AsafArusi-OmerLevi-MaorDanny.side"
   },
   "dependencies": {
     "selenium-side-runner": "^4.0.0",
-    "chromedriver": "^151.0.0"
+    "chromedriver": "^152.0.0"
   }
 }

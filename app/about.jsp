@@ -29,7 +29,7 @@
     </ol>
 
     <table class="facts">
-      <tr><th>Submitted by</th><td id="authors">Asaf Arusi</td></tr>
+      <tr><th>Submitted by</th><td id="authors">Asaf Arusi, Omer Levi, Maor Danny</td></tr>
       <tr><th>Course</th><td>Introduction to DevOps &mdash; HIT 2026, Semester C</td></tr>
       <tr><th>Servlet container</th><td id="serverInfo"><%= application.getServerInfo() %></td></tr>
       <tr><th>Servlet API</th><td><%= application.getMajorVersion() %>.<%= application.getMinorVersion() %></td></tr>

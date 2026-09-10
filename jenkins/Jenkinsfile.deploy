@@ -4,8 +4,8 @@ pipeline {
 
     environment {
         CATALINA_BASE = '/opt/homebrew/opt/tomcat@9/libexec'
-        APP_NAME      = 'AsafArusi'
-        APP_URL       = 'http://localhost:8080/AsafArusi/'
+        APP_NAME      = 'AsafArusi-OmerLevi-MaorDanny'
+        APP_URL       = 'http://localhost:8080/AsafArusi-OmerLevi-MaorDanny/'
     }
 
     options {

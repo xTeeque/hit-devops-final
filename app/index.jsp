@@ -64,7 +64,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HIT DevOps Final - Asaf Arusi</title>
+  <title>HIT DevOps Final - Asaf Arusi, Omer Levi, Maor Danny</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>

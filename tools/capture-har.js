@@ -3,7 +3,7 @@
  * docs/HAR-scenario.md by driving the installed Chrome over the DevTools
  * protocol. This produces the same artifact as DevTools -> Export HAR.
  *
- *   node tools/capture-har.js            -> docs/AsafArusi-app.har
+ *   node tools/capture-har.js            -> docs/HIT-DevOps-app.har
  */
 const { spawn } = require('child_process');
 const fs = require('fs');
@@ -13,8 +13,8 @@ const { harFromMessages } = require('chrome-har');
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const PORT = 9222;
-const APP = 'http://localhost:8080/AsafArusi';
-const OUT = path.join(__dirname, '..', 'docs', 'AsafArusi-app.har');
+const APP = 'http://localhost:8080/AsafArusi-OmerLevi-MaorDanny';
+const OUT = path.join(__dirname, '..', 'docs', 'HIT-DevOps-app.har');
 
 const OBSERVED = [
   'Page.loadEventFired', 'Page.domContentEventFired', 'Page.frameStartedLoading',

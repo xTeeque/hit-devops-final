@@ -6,7 +6,7 @@ Preserve log -> Export HAR.
 
 ## The scenario, step by step
 
-1. **Navigate** to `http://localhost:8080/AsafArusi/index.jsp`
+1. **Navigate** to `http://localhost:8080/AsafArusi-OmerLevi-MaorDanny/index.jsp`
    The browser requests the JSP, then the stylesheet it references
    (`css/style.css`). Two requests, one of them the HTML document.
 2. **Click** into the "Your name" text box (`#username`).

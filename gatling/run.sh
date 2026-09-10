@@ -22,7 +22,7 @@ shift || true
 export JAVA_HOME="${JAVA_HOME:-/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home}"
 export PATH="$JAVA_HOME/bin:$PATH"
 
-APP_BASE="${APP_BASE:-http://localhost:8080/AsafArusi}"
+APP_BASE="${APP_BASE:-http://localhost:8080/AsafArusi-OmerLevi-MaorDanny}"
 
 # Simulations live in gatling/simulations/ so they are version controlled;
 # the bundle itself is not committed. Sync them in before every run.

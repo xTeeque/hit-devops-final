@@ -42,10 +42,10 @@ done
 [ -n "${URL:-}" ] || { echo "no URL appeared - see $LOG" >&2; exit 1; }
 
 echo
-echo "  public application : ${URL}/AsafArusi/"
+echo "  public application : ${URL}/AsafArusi-OmerLevi-MaorDanny/"
 echo "  log                : ${LOG}"
 echo
 echo "Keep this tunnel running. A quick tunnel gets a NEW random URL every"
 echo "restart, so point UptimeRobot at it only once it is stable, and re-run"
 echo "the Gatling tests against it with:"
-echo "  APP_BASE=${URL}/AsafArusi ./gatling/run.sh LoadSimulation"
+echo "  APP_BASE=${URL}/AsafArusi-OmerLevi-MaorDanny ./gatling/run.sh LoadSimulation"

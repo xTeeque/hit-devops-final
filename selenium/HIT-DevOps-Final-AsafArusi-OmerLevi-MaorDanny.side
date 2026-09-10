@@ -1,7 +1,7 @@
 {
   "id": "4a8f9b3f-bbe4-4814-b18c-4195d0ed4f37",
   "version": "2.0",
-  "name": "AsafArusi-HIT-DevOps-Final",
+  "name": "HIT-DevOps-Final-AsafArusi-OmerLevi-MaorDanny",
   "url": "http://localhost:8080",
   "tests": [
     {
@@ -12,7 +12,7 @@
           "id": "e9a85a6d-13bf-4b9f-b516-94b11aa8eaf6",
           "comment": "Load production",
           "command": "open",
-          "target": "/AsafArusi/index.jsp",
+          "target": "/AsafArusi-OmerLevi-MaorDanny/index.jsp",
           "targets": [],
           "value": ""
         },
@@ -28,7 +28,7 @@
           "id": "da2b34b2-d982-4801-9f66-368284446d02",
           "comment": "ASSERT: hard precondition. If we are not on the right page nothing else means anything, so the test must stop here.",
           "command": "assertTitle",
-          "target": "HIT DevOps Final - Asaf Arusi",
+          "target": "HIT DevOps Final - Asaf Arusi, Omer Levi, Maor Danny",
           "targets": [],
           "value": ""
         },
@@ -50,7 +50,7 @@
           "id": "8dd8f5d1-eee5-419e-bcec-7a1c38967e6b",
           "comment": "",
           "command": "open",
-          "target": "/AsafArusi/index.jsp",
+          "target": "/AsafArusi-OmerLevi-MaorDanny/index.jsp",
           "targets": [],
           "value": ""
         },
@@ -88,7 +88,7 @@
           "id": "12918e73-3726-49cf-a9aa-3f1e22dff5e2",
           "comment": "",
           "command": "open",
-          "target": "/AsafArusi/index.jsp",
+          "target": "/AsafArusi-OmerLevi-MaorDanny/index.jsp",
           "targets": [],
           "value": ""
         },
@@ -150,7 +150,7 @@
           "id": "3bbcecdd-180c-4220-954c-3fb20a9ab6c2",
           "comment": "",
           "command": "open",
-          "target": "/AsafArusi/index.jsp",
+          "target": "/AsafArusi-OmerLevi-MaorDanny/index.jsp",
           "targets": [],
           "value": ""
         },
@@ -196,7 +196,7 @@
           "id": "6fde444d-6650-458a-abe9-033c6c8d13c7",
           "comment": "",
           "command": "open",
-          "target": "/AsafArusi/index.jsp",
+          "target": "/AsafArusi-OmerLevi-MaorDanny/index.jsp",
           "targets": [],
           "value": ""
         },
@@ -252,7 +252,7 @@
           "id": "702fa163-ee97-4d5e-948e-c9a19aac61a6",
           "comment": "ASSERT: and navigation back works too.",
           "command": "assertTitle",
-          "target": "HIT DevOps Final - Asaf Arusi",
+          "target": "HIT DevOps Final - Asaf Arusi, Omer Levi, Maor Danny",
           "targets": [],
           "value": ""
         }

@@ -9,7 +9,7 @@ pipeline {
     environment {
         // node/npm come from the official installer in /usr/local/bin, not Homebrew.
         PATH    = "/usr/local/bin:/opt/homebrew/bin:${env.WORKSPACE}/selenium/node_modules/.bin:${env.PATH}"
-        APP_URL = 'http://localhost:8080/AsafArusi/'
+        APP_URL = 'http://localhost:8080/AsafArusi-OmerLevi-MaorDanny/'
     }
 
     options {
@@ -50,7 +50,7 @@ pipeline {
                         selenium-side-runner \
                             --config-file .side.yml \
                             --output-directory "${WORKSPACE}/selenium-results" \
-                            AsafArusi-HIT-DevOps-Final.side
+                            HIT-DevOps-Final-AsafArusi-OmerLevi-MaorDanny.side
                     '''
                 }
             }

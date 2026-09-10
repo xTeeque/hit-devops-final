@@ -16,7 +16,7 @@ public final class BaseScenario {
 
     /** Override with -Dapp.base=https://... to test the public URL instead. */
     public static final String BASE_URL =
-            System.getProperty("app.base", "http://localhost:8080/AsafArusi");
+            System.getProperty("app.base", "http://localhost:8080/AsafArusi-OmerLevi-MaorDanny");
 
     private BaseScenario() { }
 

@@ -158,7 +158,7 @@ A JSP creates an `HttpSession` for every visitor unless told otherwise, and a
 load test presents a brand new visitor on every request. Each session then held
 heap for the 30-minute default timeout. The fix was `session="false"` on both
 pages, since the application holds no per-user state. Tomcat had also serialised
-the sessions to `work/Catalina/localhost/AsafArusi/SESSIONS.ser` on shutdown and
+the sessions to `work/Catalina/localhost/AsafArusi-OmerLevi-MaorDanny/SESSIONS.ser` on shutdown and
 restored them on the next start, so that file had to be deleted before the heap
 was genuinely clean.
 

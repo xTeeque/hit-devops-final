@@ -1,6 +1,6 @@
 ==================================================
  simulation : MaxLimitSimulation
- target     : http://localhost:8080/AsafArusi
+ target     : http://localhost:8080/AsafArusi-OmerLevi-MaorDanny
  java       : openjdk version "21.0.11" 2026-04-21
  started    : 2026-08-30 19:52:35
 ==================================================

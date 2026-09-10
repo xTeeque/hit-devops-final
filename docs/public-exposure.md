@@ -1,6 +1,6 @@
 # Bonus (brief step 5) - exposing the application to the internet
 
-**Public URL: http://46.224.99.46:8090/AsafArusi/**
+**Public URL: http://46.224.99.46:8090/AsafArusi-OmerLevi-MaorDanny/**
 
 ## What was built
 
@@ -12,7 +12,7 @@ internet -> 46.224.99.46:8090 (VPS)
                 |
                 |  reverse SSH tunnel, laptop dials out
                 v
-         laptop 127.0.0.1:8080  -> Tomcat -> webapps/AsafArusi
+         laptop 127.0.0.1:8080  -> Tomcat -> webapps/AsafArusi-OmerLevi-MaorDanny
 ```
 
 The laptop opens the connection outbound, so nothing needs to be forwarded on
@@ -66,8 +66,8 @@ Measured from the laptop:
 
 | | response time |
 |---|---|
-| `http://localhost:8080/AsafArusi/` | 0.4 ms |
-| `http://46.224.99.46:8090/AsafArusi/` | 342 ms |
+| `http://localhost:8080/AsafArusi-OmerLevi-MaorDanny/` | 0.4 ms |
+| `http://46.224.99.46:8090/AsafArusi-OmerLevi-MaorDanny/` | 342 ms |
 
 The difference is not the application. It is a round trip to the VPS and back
 down the SSH tunnel, and the tunnel is a single TCP connection that all

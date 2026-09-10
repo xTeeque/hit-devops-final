@@ -5,6 +5,32 @@ Recorded in Selenium IDE, saved as
 the Jenkins job `AsafArusi-03-selenium-tests`. The same file is both the
 submitted artifact and the thing CI runs, so there is nothing to drift.
 
+## A note on the Selenium IDE GUI
+
+The five validations below were authored as a Selenium IDE project and are
+submitted as the `.side` file the brief asks for. What is **not** submitted is a
+screenshot of the Selenium IDE window itself, because the IDE could not be run
+on this machine at all:
+
+- **The Chrome extension is dead.** Google's enforcement of Manifest V3 disables
+  it - Selenium IDE was built on Manifest V2, so Chrome now marks it unsupported
+  and blocks it. This is not a setting that can be turned back on.
+- **The desktop app does not start.** The last release of the official Electron
+  app (`4.0.1-beta.14`, July 2024, Electron 28) exits immediately on this
+  machine's macOS with no window and no crash report. There has been no release
+  since.
+
+So the run evidence is `selenium-side-runner` instead - **the official Selenium
+IDE command-line runner, from the same project**, executing this exact `.side`
+file with no translation step:
+
+- `05-screenshots/g-selenium-runner-terminal.png` - 5/5 passing in a terminal
+- `05-screenshots/g-selenium-jenkins-passed.png` - the same 5/5 in the Jenkins
+  job `AsafArusi-03-selenium-tests`
+
+For a CI/CD exercise this is arguably the better artifact: it is the same file,
+run the same way, on every deployment, rather than a person clicking Run once.
+
 ## The design, in one sentence
 
 Five validations that check five *different* things - identity, rendering,

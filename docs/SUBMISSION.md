@@ -11,11 +11,11 @@ Repo: https://github.com/xTeeque/hit-devops-final
 |---|---|---|---|
 | a | The JSP file | `app/index.jsp` (and `app/about.jsp`) | ready |
 | b | Screenshot of GitHub with the app in it | `05-screenshots/b-github-repo.png` | ready |
-| c | Screenshot of the app in Tomcat, URL visible | `05-screenshots/c-tomcat-app-page.png` | **needs your address bar** |
+| c | Screenshot of the app in Tomcat, URL visible | `05-screenshots/c-tomcat-url-visible.png` | ready |
 | d | Link to the public repo | https://github.com/xTeeque/hit-devops-final | ready |
-| e | Monitor tool, what it checks, screenshot passing | UptimeRobot + Jenkins `AsafArusi-02` | **you** (see below) |
+| e | Monitor tool, what it checks, screenshot passing | `05-screenshots/e-uptimerobot-*.png` + Jenkins `AsafArusi-02` | ready |
 | f | Selenium IDE `.side` file | `selenium/HIT-DevOps-Final-AsafArusi-OmerLevi-MaorDanny.side` | ready |
-| g | Screenshot of passed run + justification | `docs/selenium-validations.md` + `05-screenshots/g-*` | **you** (IDE screenshot) |
+| g | Screenshot of passed run + justification | `docs/selenium-validations.md` + `05-screenshots/g-*` | ready (see note) |
 | h | HAR scenario in words | `docs/HAR-scenario.md` | ready |
 | i | The HAR file | `docs/HIT-DevOps-app.har` | ready |
 | j | Max limit + how it was found | `docs/performance-analysis.md` | ready |
@@ -37,21 +37,17 @@ Repo: https://github.com/xTeeque/hit-devops-final
 The deploy and Selenium counts keep rising: every push to `main` is picked up
 within a minute and redeployed, which is the pipeline doing its job.
 
-## What only you can produce
+## Note on (g): the Selenium IDE GUI does not exist any more
 
-**(c) Tomcat with the address bar.** A headless screenshot of the page is in
-`05-screenshots/c-tomcat-app-page.png`, but the brief asks to *see the URL*, and
-headless Chrome has no address bar. Open
-`http://localhost:8080/AsafArusi-OmerLevi-MaorDanny/`, type a name, click Greet,
-then press Cmd+Shift+4 then Space and click the window.
+The `.side` file is submitted as asked. A screenshot of the IDE *window* is not,
+because the IDE cannot be run on this machine:
 
-**(e) Monitor.** The UptimeRobot monitor still points at the old
-`/AsafArusi/` path, which now returns 404. Edit it to
-`http://46.224.99.46:8090/AsafArusi-OmerLevi-MaorDanny/`, wait ~15 minutes for
-three green checks, and screenshot the dashboard. The Jenkins monitor job needs
-nothing - it already has 2,700+ green builds on the new URL.
+- The **Chrome extension** is blocked by Google's Manifest V3 enforcement - it
+  was built on MV2, so Chrome marks it unsupported and disables it.
+- The **desktop app** (`4.0.1-beta.14`, July 2024, the last release) exits
+  immediately on this macOS with no window and no crash report.
 
-**(g) Selenium IDE.** Open the `.side` file in the Selenium IDE Chrome
-extension, click **Run all tests**, screenshot the panel showing five green.
-`05-screenshots/g-selenium-jenkins-passed.png` shows the same five tests passing
-in the Jenkins job, as supporting evidence that CI runs the same `.side` file.
+The run evidence is `selenium-side-runner`, the official Selenium IDE
+command-line runner from the same project, executing the same `.side` file:
+`g-selenium-runner-terminal.png` (5/5 in a terminal) and
+`g-selenium-jenkins-passed.png` (the same 5/5 in Jenkins on every deploy).

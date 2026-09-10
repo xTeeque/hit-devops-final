@@ -62,23 +62,40 @@ certificate.
 
 ## Effect on the performance results
 
-Measured from the laptop:
+Measured from the laptop, single request:
 
 | | response time |
 |---|---|
-| `http://localhost:8080/AsafArusi-OmerLevi-MaorDanny/` | 0.4 ms |
-| `http://46.224.99.46:8090/AsafArusi-OmerLevi-MaorDanny/` | 342 ms |
+| `http://localhost:8080/AsafArusi-OmerLevi-MaorDanny/` | 0.6 ms |
+| `http://46.224.99.46:8090/AsafArusi-OmerLevi-MaorDanny/` | 319 ms |
 
-The difference is not the application. It is a round trip to the VPS and back
-down the SSH tunnel, and the tunnel is a single TCP connection that all
-forwarded traffic shares.
+I also ran Gatling through the public URL to see what the tunnel actually costs
+under load:
 
-This matters for reading the graphs. **The load tests submitted for steps 8-10
-target `localhost`, because that measures the application.** A Gatling run
-through the public URL measures the tunnel: it saturates the forwarded
-connection long before Tomcat is under any real pressure, so its numbers
-describe the network path, not the server.
+| users/sec | p95 | failures | throughput |
+|---:|---:|---:|---:|
+| 10 | 223 ms | 0 | 34 req/s |
+| 25 | 206 ms | 0 | 84 req/s |
+| 75 | 176 ms | 0 | 250 req/s |
+| 150 | 178 ms | 0 | 500 req/s |
 
-Both sets of numbers are included. The localhost graphs answer "what can this
-application do"; the public-URL graphs answer "what does this deployment
-topology cost", and the gap between them is the tunnel.
+The result corrected an assumption I had written down before measuring. I had
+expected the tunnel to **saturate** - one shared TCP connection, so throughput
+should hit a wall early. It does not: it carried 500 req/sec with no failures
+and no rise in latency, and I never found its ceiling within the range tested.
+
+What it actually does is add a **fixed latency floor of roughly 160-180 ms** and
+hold it flat regardless of rate. That is a round trip to the VPS and back down
+the tunnel, and it is constant because it is distance, not contention.
+
+That floor is still the reason **the submitted runs for steps 8-10 target
+`localhost`**. The application's own p95 inside its limit is 23 ms. Through the
+tunnel every measurement would sit on top of a 170 ms constant, so the app's
+response time would be about 12% of the number and the knee at 375 users/sec
+would be invisible - buried under network latency that has nothing to do with
+Tomcat. Testing localhost measures the application; testing the public URL
+measures Israel-to-VPS-and-back.
+
+Both sets of numbers are above. The localhost graphs answer "what can this
+application do"; this table answers "what does this deployment topology cost",
+and the gap between them - 0.6 ms against 319 ms - is the tunnel.

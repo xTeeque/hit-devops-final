@@ -21,6 +21,24 @@ Preserve log -> Export HAR.
    load - visible in the HAR as a 304 or a "from disk cache" entry).
 7. **Click** **Back to the application** (`#homeLink`) to return to `index.jsp`.
 
+## What the recording shows
+
+The six entries and their timings, straight from the capture:
+
+| # | request | time |
+|---|---|---:|
+| 1 | `index.jsp` | 1 ms |
+| 2 | `css/style.css` | 1 ms |
+| 3 | `favicon.ico` | 4 ms |
+| 4 | `index.jsp?username=Asaf&greet=1` | **39 ms** |
+| 5 | `about.jsp` | 1 ms |
+| 6 | `index.jsp` (back) | 1 ms |
+
+The greet request costs roughly forty times the others. That is the PBKDF2 key
+derivation running server-side, and it is visible in the HAR before any load
+test is involved - the recording and the performance results are describing the
+same thing.
+
 ## Why this scenario
 
 It touches every element the brief required - the link, the button and the

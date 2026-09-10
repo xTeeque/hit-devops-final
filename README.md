@@ -29,7 +29,7 @@ laptop  ->  GitHub  ->  Jenkins (:8081)  ->  Tomcat 9 (:8080)  ->  public URL
 
 ```
 app/         the deployed application (index.jsp, about.jsp, css/)
-jenkins/     pipeline definitions for all four Jenkins jobs
+jenkins/     pipeline definitions for all six Jenkins jobs
 selenium/    Selenium IDE project (.side) and the runner script
 gatling/     Gatling simulations for max-limit, load and stress
 docs/        submission notes and written explanations
@@ -44,7 +44,24 @@ file's modification time changes.
 
 ## Note on the workload in index.jsp
 
-`index.jsp` contains a synchronized visit counter and a small repeated-hash
-computation. Both are deliberate. They give the application a realistic
-per-request cost and a real serialization point, so the Gatling results
-measure the application rather than the loopback network.
+`index.jsp` contains a synchronized visit counter and a PBKDF2-HMAC-SHA256 key
+derivation at 150,000 iterations. Both are deliberate. They give the
+application a realistic per-request cost (~12 ms of CPU, the work a login
+endpoint does to verify a password) and a real serialization point, so the
+Gatling results measure the application rather than the loopback network.
+
+Both pages set `session="false"`. A JSP otherwise creates an `HttpSession` per
+visitor, and a load test is a new visitor on every request - that leak once put
+252,180 live session objects in the Tomcat heap and made consecutive runs
+uncomparable.
+
+## Results
+
+| | |
+|---|---|
+| Max limit | **375 users/sec (~1,250 req/sec)**, p95 23 ms, zero failures |
+| Breaks at | 400 users/sec - p95 16 s and throughput *falls* to 857 req/sec |
+| Load test | 225 users/sec for 3 min: 168,780 requests, 0 failures, p95 29 ms |
+| Stress test | 750 users/sec for 3 min: 480,080 requests, 71% failed, p95 28 s |
+
+Full write-up in [docs/performance-analysis.md](docs/performance-analysis.md).

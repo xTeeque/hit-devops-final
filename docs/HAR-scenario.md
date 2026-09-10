@@ -1,6 +1,6 @@
 # Deliverable (h) - the HAR scenario, in words
 
-The HAR file (`docs/AsafArusi-app.har`) is a recording of one complete user
+The HAR file (`docs/HIT-DevOps-app.har`) is a recording of one complete user
 journey through the application, captured with Chrome DevTools -> Network ->
 Preserve log -> Export HAR.
 

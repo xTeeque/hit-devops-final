@@ -1,7 +1,7 @@
 # Submission checklist
 
-Email to **mosh?hit@gmail.com** (address as printed in the brief), subject:
-`Final Exercise from: Asaf Arusi`
+Email to **mosh.hit@gmail.com** (address as printed in the brief), subject:
+`Final Exercise from: Asaf Arusi, Omer Levi, Maor Danny`
 
 | # | Deliverable | Where it is | Status |
 |---|---|---|---|
@@ -11,10 +11,10 @@ Email to **mosh?hit@gmail.com** (address as printed in the brief), subject:
 | bonus | Public URL + write-up | http://46.224.99.46:8090/AsafArusi-OmerLevi-MaorDanny/ , `docs/public-exposure.md` | ready |
 | d | Link to the public repo | https://github.com/xTeeque/hit-devops-final | ready |
 | e | Monitor tool, what it checks, screenshot passing | UptimeRobot on the public URL + Jenkins job `AsafArusi-02` | **you** (screenshot) |
-| f | Selenium IDE `.side` file | `selenium/AsafArusi-HIT-DevOps-Final.side` | ready |
+| f | Selenium IDE `.side` file | `selenium/HIT-DevOps-Final-AsafArusi-OmerLevi-MaorDanny.side` | ready |
 | g | Screenshot of passed run + justification | `docs/selenium-validations.md` | **you** (screenshot) |
 | h | HAR scenario in words | `docs/HAR-scenario.md` | ready |
-| i | The HAR file | `docs/AsafArusi-app.har` | see below |
+| i | The HAR file | `docs/HIT-DevOps-app.har` | see below |
 | j | Max limit + how it was found | `docs/performance-analysis.md` | ready |
 | k | 3 CMD screenshots (max limit, load, stress) | `docs/gatling-console-*.txt` | **you** (screenshot) |
 | l | 3 PDFs of Gatling reports + why | `docs/reports/*.pdf`, analysis in `docs/performance-analysis.md` | ready |
@@ -35,12 +35,12 @@ the brief explicitly asks to see the URL.
 column of blue/green runs five minutes apart.
 
 **(g) Selenium IDE** - install the Selenium IDE extension in Chrome, open
-`selenium/AsafArusi-HIT-DevOps-Final.side`, click **Run all tests**, and
+`selenium/HIT-DevOps-Final-AsafArusi-OmerLevi-MaorDanny.side`, click **Run all tests**, and
 screenshot the panel showing all five green.
 
 **(i) HAR** - Chrome DevTools -> Network -> tick **Preserve log** -> perform the
 scenario in `docs/HAR-scenario.md` -> right-click the request list ->
-**Save all as HAR with content** -> save as `docs/AsafArusi-app.har`.
+**Save all as HAR with content** -> save as `docs/HIT-DevOps-app.har`.
 
 **(k) CMD screenshots** - the saved console output is in `docs/`, but the brief
 asks for screenshots of the terminal. Re-run each job from Jenkins, or run

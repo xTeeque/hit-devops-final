@@ -1,7 +1,7 @@
 # HIT DevOps 2026 - Final Project
 
 Introduction to DevOps, HIT 2026 Semester C. Lecturer: Moshe Mamia.
-Submitted by: **Asaf Arusi**
+Submitted by: **Asaf Arusi, Omer Levi, Maor Danny**
 
 A JSP web application delivered from development into production by a CI/CD
 pipeline, then monitored, functionally tested, and performance tested.

@@ -1,7 +1,7 @@
 # Deliverable (g) - the five validations, and why each one is there
 
 Recorded in Selenium IDE, saved as
-`selenium/AsafArusi-HIT-DevOps-Final.side`, and executed headlessly in CI by
+`selenium/HIT-DevOps-Final-AsafArusi-OmerLevi-MaorDanny.side`, and executed headlessly in CI by
 the Jenkins job `AsafArusi-03-selenium-tests`. The same file is both the
 submitted artifact and the thing CI runs, so there is nothing to drift.
 
@@ -26,7 +26,7 @@ page, and every later failure is noise caused by the first one.
 ## The five
 
 ### V1 - page identity (`assert`)
-`assertTitle` on `HIT DevOps Final - Asaf Arusi`, then `assertText` on
+`assertTitle` on `HIT DevOps Final - Asaf Arusi, Omer Levi, Maor Danny`, then `assertText` on
 `#heading`. **assert**, because this is a hard precondition: if we are not on
 the right page, or the deployed build is not the one we expect, nothing that
 follows means anything. Stopping here is the correct behaviour.

@@ -28,7 +28,7 @@ pipeline {
 
         stage('LoadSimulation') {
             steps {
-                sh './gatling/run.sh LoadSimulation -Dduration.secs=180'
+                sh './gatling/run.sh LoadSimulation -Dduration.secs=180 -Dload.rate=225'
             }
         }
 

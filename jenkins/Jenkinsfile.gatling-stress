@@ -28,7 +28,7 @@ pipeline {
 
         stage('StressSimulation') {
             steps {
-                sh './gatling/run.sh StressSimulation -Dduration.secs=180'
+                sh './gatling/run.sh StressSimulation -Dduration.secs=180 -Dstress.rate=750'
             }
         }
 
